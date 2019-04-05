@@ -1,5 +1,6 @@
 import { NextFunction, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import config from '../config/config';
 import AuthenticationTokenMissingException from '../exceptions/AuthenticationTokenMissingException';
 import WrongAuthenticationTokenException from '../exceptions/WrongAuthenticationTokenException';
 import DataStoredInToken from '../interfaces/dataStoredInToken';
@@ -9,7 +10,7 @@ import userModel from '../user/user.model';
 async function authMiddleware(request: RequestWithUser, response: Response, next: NextFunction) {
   const cookies = request.cookies;
   if (cookies && cookies.Authorization) {
-    const secret = process.env.JWT_SECRET;
+    const secret = config.env.jwtSecret;
     try {
       const verificationResponse = jwt.verify(cookies.Authorization, secret) as DataStoredInToken;
       const id = verificationResponse._id;

@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "paths": {
+      "*": [
+        "types/*"
+      ]
+    },
     "sourceMap": true,
     "target": "es2017",
     "outDir": "./dist",

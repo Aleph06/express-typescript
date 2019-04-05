@@ -9,7 +9,7 @@ function validateEnv() {
     MONGO_PATH: str(),
     MONGO_USER: str(),
     PORT: port(),
-  });
+  },       {});
 }
 
 export default validateEnv;

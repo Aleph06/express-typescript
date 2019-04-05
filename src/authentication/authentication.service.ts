@@ -1,5 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+
+import config from '../config/config';
 import UserWithThatEmailAlreadyExistsException from '../exceptions/UserWithThatEmailAlreadyExistsException';
 import DataStoredInToken from '../interfaces/dataStoredInToken';
 import TokenData from '../interfaces/tokenData.interface';
@@ -34,7 +36,7 @@ class AuthenticationService {
   }
   public createToken(user: User): TokenData {
     const expiresIn = 60 * 60; // an hour
-    const secret = process.env.JWT_SECRET;
+    const secret = config.env.jwtSecret;
     const dataStoredInToken: DataStoredInToken = {
       _id: user._id,
     };

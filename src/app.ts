@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
+import config from './config/config';
 import Controller from './interfaces/controller.interface';
 import errorMiddleware from './middleware/error.middleware';
 
@@ -17,6 +18,9 @@ class App {
     this.initializeErrorHandling();
   }
 
+  /**
+   *
+   */
   public listen() {
     this.app.listen(process.env.PORT, () => {
       console.log(`App listening on the port ${process.env.PORT}`);
@@ -36,6 +40,10 @@ class App {
     this.app.use(errorMiddleware);
   }
 
+  /**
+   *
+   * @param controllers
+   */
   private initializeControllers(controllers: Controller[]) {
     controllers.forEach((controller) => {
       this.app.use('/', controller.router);
@@ -43,12 +51,10 @@ class App {
   }
 
   private connectToTheDatabase() {
-    const {
-      MONGO_USER,
-      MONGO_PASSWORD,
-      MONGO_PATH,
-    } = process.env;
-    mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`);
+    const connectionString = config.getDBURL();
+    mongoose.connect(`mongodb://${connectionString}`, { useNewUrlParser: true })
+      .then(connection => console.log('MongoDB connected'))
+      .catch((error) => { throw error; });
   }
 }
 

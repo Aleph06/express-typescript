@@ -11,6 +11,7 @@ import User from '../user/user.interface';
 import userModel from './../user/user.model';
 import AuthenticationService from './authentication.service';
 import LogInDto from './logIn.dto';
+import config from '../config/config';
 
 class AuthenticationController implements Controller {
   public path = '/auth';
@@ -71,7 +72,7 @@ class AuthenticationController implements Controller {
 
   private createToken(user: User): TokenData {
     const expiresIn = 60 * 60; // an hour
-    const secret = process.env.JWT_SECRET;
+    const secret = config.env.jwtSecret;
     const dataStoredInToken: DataStoredInToken = {
       _id: user._id,
     };

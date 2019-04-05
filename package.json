@@ -36,9 +36,10 @@
     "typescript": "^3.2.1"
   },
   "scripts": {
-    "dev": "ts-node ./src/server.ts",
+    "dev": "ts-node -r dotenv/config ./src/server.ts",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "jest"
+    "test": "jest",
+    "prod": "tsc && setEnv && node ./dist/server.js"
   },
   "author": "Marcin Wanago",
   "license": "MIT",
